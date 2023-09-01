@@ -1,5 +1,5 @@
-# Ignore .gwh files
-*.gwh
+# Ignore .ghw files
+*.ghw
 
 # Ignore .cf files
 *.cf
