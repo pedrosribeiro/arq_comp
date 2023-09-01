@@ -11,7 +11,7 @@ entity decoder2x4 is
         out_1: out std_logic;
         out_0: out std_logic
     );
-end entity decoder2x4;
+end entity;
 
 architecture a_decord2x4 of decoder2x4 is
     begin
