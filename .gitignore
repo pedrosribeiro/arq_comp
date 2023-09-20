@@ -3,3 +3,6 @@
 
 # Ignore .cf files
 *.cf
+
+# Ignore .gtkw files
+*.gtkw
