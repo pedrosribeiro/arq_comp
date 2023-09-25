@@ -17,3 +17,9 @@ ghdl -e file_tb
 ghdl -r file_tb --wave=file_tb.ghw
 gtkwave file_tb.ghw
 ```
+
+or
+
+```bash
+sh compile.sh
+```
