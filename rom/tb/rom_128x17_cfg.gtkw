@@ -1,0 +1,25 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sat Oct 07 16:15:17 2023
+[*]
+[dumpfile] "C:\Users\55459\Desktop\arq_comp\rom\tb\rom_128x17_tb.ghw"
+[dumpfile_mtime] "Sat Oct 07 16:14:42 2023"
+[dumpfile_size] 15145
+[savefile] "C:\Users\55459\Desktop\arq_comp\rom\tb\rom_128x17_cfg.gtkw"
+[timestart] 0
+[size] 1920 1017
+[pos] -35 -35
+*-24.627193 125100000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.rom_128x17_tb.
+[sst_width] 197
+[signals_width] 198
+[sst_expanded] 1
+[sst_vpaned_height] 588
+@28
+top.rom_128x17_tb.clk
+@22
+#{top.rom_128x17_tb.addr[6:0]} top.rom_128x17_tb.addr[6] top.rom_128x17_tb.addr[5] top.rom_128x17_tb.addr[4] top.rom_128x17_tb.addr[3] top.rom_128x17_tb.addr[2] top.rom_128x17_tb.addr[1] top.rom_128x17_tb.addr[0]
+#{top.rom_128x17_tb.data_out[16:0]} top.rom_128x17_tb.data_out[16] top.rom_128x17_tb.data_out[15] top.rom_128x17_tb.data_out[14] top.rom_128x17_tb.data_out[13] top.rom_128x17_tb.data_out[12] top.rom_128x17_tb.data_out[11] top.rom_128x17_tb.data_out[10] top.rom_128x17_tb.data_out[9] top.rom_128x17_tb.data_out[8] top.rom_128x17_tb.data_out[7] top.rom_128x17_tb.data_out[6] top.rom_128x17_tb.data_out[5] top.rom_128x17_tb.data_out[4] top.rom_128x17_tb.data_out[3] top.rom_128x17_tb.data_out[2] top.rom_128x17_tb.data_out[1] top.rom_128x17_tb.data_out[0]
+[pattern_trace] 1
+[pattern_trace] 0
