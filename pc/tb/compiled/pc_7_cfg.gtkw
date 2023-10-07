@@ -1,0 +1,26 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sat Oct 07 19:08:23 2023
+[*]
+[dumpfile] "C:\Users\55459\Desktop\arq_comp\pc\tb\compiled\compiled\pc_7_tb.ghw"
+[savefile] "C:\Users\55459\Desktop\arq_comp\pc\tb\compiled\pc_7_cfg.gtkw"
+[timestart] 1190400000
+[size] 1920 1017
+[pos] -165 -165
+*-25.341017 1439600000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.pc_7_tb.
+[sst_width] 197
+[signals_width] 199
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+top.pc_7_tb.wr_en
+top.pc_7_tb.rst
+top.pc_7_tb.clk
+@24
+#{top.pc_7_tb.data_in_s[6:0]} top.pc_7_tb.data_in_s[6] top.pc_7_tb.data_in_s[5] top.pc_7_tb.data_in_s[4] top.pc_7_tb.data_in_s[3] top.pc_7_tb.data_in_s[2] top.pc_7_tb.data_in_s[1] top.pc_7_tb.data_in_s[0]
+@25
+#{top.pc_7_tb.data_out_s[6:0]} top.pc_7_tb.data_out_s[6] top.pc_7_tb.data_out_s[5] top.pc_7_tb.data_out_s[4] top.pc_7_tb.data_out_s[3] top.pc_7_tb.data_out_s[2] top.pc_7_tb.data_out_s[1] top.pc_7_tb.data_out_s[0]
+[pattern_trace] 1
+[pattern_trace] 0
