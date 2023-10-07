@@ -1,0 +1,25 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sat Oct 07 21:15:50 2023
+[*]
+[dumpfile] "C:\Users\55459\Desktop\arq_comp\control_unit_proto\tb\compiled\compiled\control_unit_proto_tb.ghw"
+[savefile] "C:\Users\55459\Desktop\arq_comp\control_unit_proto\tb\compiled\control_unit_proto_tb_cfg.gtkw"
+[timestart] 0
+[size] 1920 1017
+[pos] -139 -139
+*-27.646271 199000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.control_unit_proto_tb.uut.rom.
+[sst_width] 197
+[signals_width] 206
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+top.control_unit_proto_tb.clk
+top.control_unit_proto_tb.rst
+top.control_unit_proto_tb.uut.wr_en_pc
+@24
+#{top.control_unit_proto_tb.uut.addr_rom[6:0]} top.control_unit_proto_tb.uut.addr_rom[6] top.control_unit_proto_tb.uut.addr_rom[5] top.control_unit_proto_tb.uut.addr_rom[4] top.control_unit_proto_tb.uut.addr_rom[3] top.control_unit_proto_tb.uut.addr_rom[2] top.control_unit_proto_tb.uut.addr_rom[1] top.control_unit_proto_tb.uut.addr_rom[0]
+@22
+#{top.control_unit_proto_tb.debug_out[16:0]} top.control_unit_proto_tb.debug_out[16] top.control_unit_proto_tb.debug_out[15] top.control_unit_proto_tb.debug_out[14] top.control_unit_proto_tb.debug_out[13] top.control_unit_proto_tb.debug_out[12] top.control_unit_proto_tb.debug_out[11] top.control_unit_proto_tb.debug_out[10] top.control_unit_proto_tb.debug_out[9] top.control_unit_proto_tb.debug_out[8] top.control_unit_proto_tb.debug_out[7] top.control_unit_proto_tb.debug_out[6] top.control_unit_proto_tb.debug_out[5] top.control_unit_proto_tb.debug_out[4] top.control_unit_proto_tb.debug_out[3] top.control_unit_proto_tb.debug_out[2] top.control_unit_proto_tb.debug_out[1] top.control_unit_proto_tb.debug_out[0]
+[pattern_trace] 1
+[pattern_trace] 0

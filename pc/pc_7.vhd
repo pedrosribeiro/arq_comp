@@ -4,6 +4,7 @@ use ieee.numeric_std.all;
 
 -- this pc works as a register
 -- the counter itself will be made by incrementing data_out and connecting it to data_in at the top-level
+-- the count is given by an external incrementing circuit
 
 entity pc_7 is
     port (

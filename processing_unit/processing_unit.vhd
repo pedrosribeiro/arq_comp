@@ -54,14 +54,11 @@ architecture a_processing_unit of processing_unit is
 
     signal alu_in_1, alu_in_0   : unsigned(15 downto 0);
     signal alu_out              : unsigned(15 downto 0);
-    --signal sel_op               : unsigned(2 downto 0);
     signal N, Z, C, V           : std_logic;
 
-    --signal read_reg1, read_reg0, write_reg: unsigned(2 downto 0);
     signal reg_bank_read_data1, reg_bank_read_data0: unsigned(15 downto 0);
 
     signal mux_in_1, mux_in_0, mux_out : unsigned(15 downto 0);
-    --signal sel                         : std_logic;
 
 begin
     
