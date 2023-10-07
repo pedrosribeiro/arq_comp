@@ -1,0 +1,23 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sat Oct 07 17:02:40 2023
+[*]
+[dumpfile] "C:\Users\55459\Desktop\arq_comp\state_mach\tb\compiled\state_mach_2_tb.ghw"
+[dumpfile_mtime] "Sat Oct 07 17:00:40 2023"
+[dumpfile_size] 18462
+[savefile] "C:\Users\55459\Desktop\arq_comp\state_mach\tb\compiled\state_mach_2_tb_cfg.gtkw"
+[timestart] 0
+[size] 1920 1017
+[pos] -87 -87
+*-25.535904 23300000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[sst_width] 197
+[signals_width] 108
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+top.state_mach_2_tb.rst
+top.state_mach_2_tb.clk
+top.state_mach_2_tb.state
+[pattern_trace] 1
+[pattern_trace] 0
