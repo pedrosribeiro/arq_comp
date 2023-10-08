@@ -1,12 +1,15 @@
 # entities
-ghdl -a ../control_unit_proto.vhd
-ghdl -e control_unit_proto
-
 ghdl -a ../../pc/pc_7.vhd
 ghdl -e pc_7
 
 ghdl -a ../../rom/rom_128x17.vhd
 ghdl -e rom_128x17
+
+ghdl -a ../../state_mach/state_mach_2.vhd
+ghdl -e state_mach_2
+
+ghdl -a ../control_unit_proto.vhd
+ghdl -e control_unit_proto
 
 # testbench
 ghdl -a control_unit_proto_tb.vhd
