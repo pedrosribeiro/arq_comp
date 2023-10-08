@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity processing_unit is
+entity processing_unit_proto is
     port (
         clk     : in std_logic;
         rst     : in std_logic;
@@ -17,7 +17,7 @@ entity processing_unit is
     );
 end entity;
 
-architecture a_processing_unit of processing_unit is
+architecture a_processing_unit_proto of processing_unit_proto is
     component alu
         port (
             in_1, in_0  : in    unsigned(15 downto 0);

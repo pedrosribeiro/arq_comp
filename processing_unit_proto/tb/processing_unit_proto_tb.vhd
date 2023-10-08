@@ -2,11 +2,11 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity processing_unit_tb is
+entity processing_unit_proto_tb is
 end entity;
 
-architecture a_processing_unit_tb of processing_unit_tb is
-    component processing_unit
+architecture a_processing_unit_proto_tb of processing_unit_proto_tb is
+    component processing_unit_proto
         port (
             clk     : in std_logic;
             rst     : in std_logic;
@@ -32,7 +32,7 @@ architecture a_processing_unit_tb of processing_unit_tb is
     signal sel                              : std_logic;
 
 begin
-    uut: processing_unit port map(
+    uut: processing_unit_proto port map(
         clk => clk,
         rst => rst,
         wr_en => wr_en,
