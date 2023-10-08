@@ -2,7 +2,7 @@
 
 ## About
 
-Lorem ipsum dolor sit amet
+This repository is part of the "Arquitetura e Organização de Computadores" course project in which we use VHDL to simulate a microprocessor by implementing some essential components found in a real-world one.
 
 ## Tools used
 Analyzer, compiler and simulator: GHDL - Version 3.0.0
@@ -11,14 +11,7 @@ Waveform viewer: GTKWave Analyzer - Version 3.3.100
 
 ## Running a testbench
 
-```bash
-ghdl -a file_tb.vhd
-ghdl -e file_tb
-ghdl -r file_tb --wave=file_tb.ghw
-gtkwave file_tb.ghw
-```
-
-or
+Run the following command within the directory containing the component you want to test.
 
 ```bash
 sh compile.sh

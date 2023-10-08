@@ -2,10 +2,10 @@
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
 [*] Wed Sep 20 19:46:34 2023
 [*]
-[dumpfile] "C:\Users\55459\Desktop\arq_comp\alu\alu_tb.ghw"
+[dumpfile] "C:\Users\55459\Desktop\arq_comp\alu\tb\alu_tb.ghw"
 [dumpfile_mtime] "Wed Sep 20 19:45:18 2023"
 [dumpfile_size] 3878
-[savefile] "C:\Users\55459\Desktop\arq_comp\alu\cfg.gtkw"
+[savefile] "C:\Users\55459\Desktop\arq_comp\alu\tb\cfg.gtkw"
 [timestart] 949000000
 [size] 1920 1017
 [pos] -243 -243
