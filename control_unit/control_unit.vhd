@@ -2,15 +2,14 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity control_unit_proto is
+entity control_unit is
     port (
         clk         : in std_logic;
-        rst         : in std_logic;
-        debug_out   : out unsigned(16 downto 0)            -- debug rom output
+        rst         : in std_logic
     );
 end entity;
 
-architecture a_control_unit_proto of control_unit_proto is
+architecture a_control_unit of control_unit is
     component pc_7
         port (
             clk     : in std_logic;
@@ -108,9 +107,6 @@ begin
 
     -- pc output goes to the rom input (addr)
     addr_rom <= data_out_pc;
-
-    -- debug rom output at the top level
-    debug_out <= data_out_rom;
 
     -- rom output to instruction register
     data_in_inst_reg <= data_out_rom;

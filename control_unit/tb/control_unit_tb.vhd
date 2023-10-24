@@ -2,15 +2,14 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity control_unit_proto_tb is
+entity control_unit_tb is
 end entity;
 
-architecture a_control_unit_proto_tb of control_unit_proto_tb is
-    component control_unit_proto
+architecture a_control_unit_tb of control_unit_tb is
+    component control_unit
         port (
             clk         : in std_logic;
-            rst         : in std_logic;
-            debug_out   : out unsigned(16 downto 0)            -- debug rom output
+            rst         : in std_logic
         );
     end component;
 
@@ -19,13 +18,11 @@ architecture a_control_unit_proto_tb of control_unit_proto_tb is
     signal finished         : std_logic := '0';
 
     signal clk, rst : std_logic;
-    signal debug_out: unsigned(16 downto 0);
 begin
     -- instance
-    uut: control_unit_proto port map (
+    uut: control_unit port map (
         clk         => clk,
-        rst         => rst,
-        debug_out   => debug_out
+        rst         => rst
     );
 
     -- rst global process

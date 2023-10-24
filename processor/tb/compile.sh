@@ -11,8 +11,20 @@ ghdl -e register16
 ghdl -a ../../reg_bank/reg_bank_8x16.vhd
 ghdl -e reg_bank_8x16
 
-ghdl -a ../../mux/mux2x1.vhd
-ghdl -e mux2x1
+ghdl -a ../../pc/pc_7.vhd
+ghdl -e pc_7
+
+ghdl -a ../../state_mach/state_mach_3.vhd
+ghdl -e state_mach_3
+
+ghdl -a ../../register/register17.vhd
+ghdl -e register17
+
+ghdl -a ../../rom/rom_128x17.vhd
+ghdl -e rom_128x17
+
+ghdl -a ../../control_unit/control_unit.vhd
+ghdl -e control_unit
 
 ghdl -a ../processor.vhd
 ghdl -e processor
