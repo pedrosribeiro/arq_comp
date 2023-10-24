@@ -5,8 +5,11 @@ ghdl -e pc_7
 ghdl -a ../../rom/rom_128x17.vhd
 ghdl -e rom_128x17
 
-ghdl -a ../../state_mach/state_mach_2.vhd
-ghdl -e state_mach_2
+ghdl -a ../../state_mach/state_mach_3.vhd
+ghdl -e state_mach_3
+
+ghdl -a ../../register/register17.vhd
+ghdl -e register17
 
 ghdl -a ../control_unit_proto.vhd
 ghdl -e control_unit_proto

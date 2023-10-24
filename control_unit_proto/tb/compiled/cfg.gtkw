@@ -1,26 +1,34 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Sun Oct 08 00:33:07 2023
+[*] Tue Oct 24 15:21:13 2023
 [*]
 [dumpfile] "C:\Users\55459\Desktop\arq_comp\control_unit_proto\tb\compiled\compiled\control_unit_proto_tb.ghw"
-[savefile] "C:\Users\55459\Desktop\arq_comp\control_unit_proto\tb\compiled\control_unit_proto_tb_cfg.gtkw"
+[savefile] "C:\Users\55459\Desktop\arq_comp\control_unit_proto\tb\compiled\cfg.gtkw"
 [timestart] 0
 [size] 1920 1017
-[pos] -217 -217
-*-27.646271 1373000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -191 -191
+*-28.646271 650000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.control_unit_proto_tb.
 [treeopen] top.control_unit_proto_tb.uut.
+[treeopen] top.control_unit_proto_tb.uut.inst_reg.
 [treeopen] top.control_unit_proto_tb.uut.pc.
+[treeopen] top.control_unit_proto_tb.uut.state_mach.
 [sst_width] 197
-[signals_width] 206
+[signals_width] 252
 [sst_expanded] 1
-[sst_vpaned_height] 588
+[sst_vpaned_height] 633
 @28
 top.control_unit_proto_tb.clk
 top.control_unit_proto_tb.rst
 top.control_unit_proto_tb.uut.wr_en_pc
 @24
 #{top.control_unit_proto_tb.uut.addr_rom[6:0]} top.control_unit_proto_tb.uut.addr_rom[6] top.control_unit_proto_tb.uut.addr_rom[5] top.control_unit_proto_tb.uut.addr_rom[4] top.control_unit_proto_tb.uut.addr_rom[3] top.control_unit_proto_tb.uut.addr_rom[2] top.control_unit_proto_tb.uut.addr_rom[1] top.control_unit_proto_tb.uut.addr_rom[0]
-@29
+@22
 #{top.control_unit_proto_tb.debug_out[16:0]} top.control_unit_proto_tb.debug_out[16] top.control_unit_proto_tb.debug_out[15] top.control_unit_proto_tb.debug_out[14] top.control_unit_proto_tb.debug_out[13] top.control_unit_proto_tb.debug_out[12] top.control_unit_proto_tb.debug_out[11] top.control_unit_proto_tb.debug_out[10] top.control_unit_proto_tb.debug_out[9] top.control_unit_proto_tb.debug_out[8] top.control_unit_proto_tb.debug_out[7] top.control_unit_proto_tb.debug_out[6] top.control_unit_proto_tb.debug_out[5] top.control_unit_proto_tb.debug_out[4] top.control_unit_proto_tb.debug_out[3] top.control_unit_proto_tb.debug_out[2] top.control_unit_proto_tb.debug_out[1] top.control_unit_proto_tb.debug_out[0]
+@28
+#{top.control_unit_proto_tb.uut.state_mach.state_s[1:0]} top.control_unit_proto_tb.uut.state_mach.state_s[1] top.control_unit_proto_tb.uut.state_mach.state_s[0]
+@22
+#{top.control_unit_proto_tb.uut.pc.data[6:0]} top.control_unit_proto_tb.uut.pc.data[6] top.control_unit_proto_tb.uut.pc.data[5] top.control_unit_proto_tb.uut.pc.data[4] top.control_unit_proto_tb.uut.pc.data[3] top.control_unit_proto_tb.uut.pc.data[2] top.control_unit_proto_tb.uut.pc.data[1] top.control_unit_proto_tb.uut.pc.data[0]
 [pattern_trace] 1
 [pattern_trace] 0
