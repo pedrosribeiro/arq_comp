@@ -14,13 +14,13 @@ ghdl -e reg_bank_8x16
 ghdl -a ../../mux/mux2x1.vhd
 ghdl -e mux2x1
 
-ghdl -a ../processing_unit_proto.vhd
-ghdl -e processing_unit_proto
+ghdl -a ../processor.vhd
+ghdl -e processor
 
 # testbench
-ghdl -a processing_unit_proto_tb.vhd
-ghdl -e processing_unit_proto_tb
+ghdl -a processor_tb.vhd
+ghdl -e processor_tb
 
 # run and view
-ghdl -r processing_unit_proto_tb --wave=compiled/processing_unit_proto_tb.ghw
-gtkwave compiled/processing_unit_proto_tb.ghw
+ghdl -r processor_tb --wave=compiled/processor_tb.ghw
+gtkwave compiled/processor_tb.ghw
