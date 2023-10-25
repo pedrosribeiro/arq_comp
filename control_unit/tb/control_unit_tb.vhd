@@ -8,10 +8,21 @@ end entity;
 architecture a_control_unit_tb of control_unit_tb is
     component control_unit
         port (
-            clk         : in std_logic;
-            rst         : in std_logic
+            clk             : in std_logic;
+            rst             : in std_logic;
+            instruction     : in unsigned(16 downto 0); -- rom instruction
+            wr_en_pc        : out std_logic;            -- program counter write enable
+            wr_en_inst_reg  : out std_logic;            -- instruction register write enable
+            alu_src         : out std_logic;
+            reg_write       : out std_logic;            -- register bank write enable
+            jump_en         : out std_logic;
+            alu_op          : out unsigned(1 downto 0)
         );
     end component;
+
+    signal instruction: unsigned(16 downto 0);
+    signal wr_en_pc, wr_en_inst_reg, alu_src, reg_write, jump_en: std_logic;
+    signal alu_op: unsigned(1 downto 0);
 
     -- clk and rst waves
     constant period_time    : time := 100 ns;
@@ -21,8 +32,15 @@ architecture a_control_unit_tb of control_unit_tb is
 begin
     -- instance
     uut: control_unit port map (
-        clk         => clk,
-        rst         => rst
+        clk             => clk,
+        rst             => rst,
+        instruction     => instruction,
+        wr_en_pc        => wr_en_pc,
+        wr_en_inst_reg  => wr_en_inst_reg,
+        alu_src         => alu_src,
+        reg_write       => reg_write,
+        jump_en         => jump_en,
+        alu_op          => alu_op
     );
 
     -- rst global process
