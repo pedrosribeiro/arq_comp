@@ -4,35 +4,19 @@ use ieee.numeric_std.all;
 
 entity control_unit is
     port (
-        clk         : in std_logic;
-        rst         : in std_logic
+        clk             : in std_logic;
+        rst             : in std_logic;
+        instruction     : in unsigned(16 downto 0); -- rom instruction
+        wr_en_pc        : out std_logic;            -- program counter write enable
+        wr_en_inst_reg  : out std_logic;            -- instruction register write enable
+        alu_src         : out std_logic;
+        reg_write       : out std_logic;            -- register bank write enable
+        jump_en         : out std_logic;
+        alu_op          : out unsigned(1 downto 0)
     );
 end entity;
 
 architecture a_control_unit of control_unit is
-    component pc_7
-        port (
-            clk     : in std_logic;
-            rst     : in std_logic;
-            wr_en   : in std_logic;
-            data_in : in unsigned(6 downto 0); -- 0 to 127
-            data_out: out unsigned(6 downto 0)
-        );
-    end component;
-
-    signal wr_en_pc                 : std_logic;
-    signal data_in_pc, data_out_pc  : unsigned(6 downto 0);
-
-    component rom_128x17
-        port (
-            clk         : in std_logic;                 -- synchronous rom
-            addr        : in unsigned(6 downto 0);      -- 128 addresses
-            data_out    : out unsigned(16 downto 0)     -- 17 bits of data
-        );
-    end component;
-
-    signal addr_rom     : unsigned(6 downto 0);
-    signal data_out_rom : unsigned(16 downto 0);
 
     component state_mach_3
         port (
@@ -44,47 +28,23 @@ architecture a_control_unit of control_unit is
 
     signal state_s: unsigned(1 downto 0);
 
-    component register17
-        port (
-            clk     : in std_logic;
-            rst     : in std_logic;
-            wr_en   : in std_logic;
-            data_in : in unsigned(16 downto 0);
-            data_out: out unsigned(16 downto 0)
-        );
-    end component;
-
-    signal wr_en_inst_reg                       : std_logic;
-    signal data_in_inst_reg, data_out_inst_reg  : unsigned(16 downto 0);
-
     signal opcode   : unsigned(3 downto 0);
-    signal jump_en  : std_logic;
-    signal jump_addr: unsigned(6 downto 0);
 
     -- opcodes
-    constant nop_opcode: unsigned(3 downto 0) := "0000";
-    constant jmp_opcode: unsigned(3 downto 0) := "1111";
+    constant add_opcode     : unsigned(3 downto 0) := "0001";
+    constant sub_opcode     : unsigned(3 downto 0) := "0010";
+    constant movei_opcode   : unsigned(3 downto 0) := "0011";
+    constant move_opcode    : unsigned(3 downto 0) := "0100";
+    constant beq_opcode     : unsigned(3 downto 0) := "0110";
+    constant bgt_opcode     : unsigned(3 downto 0) := "0111";
+    constant jmp_opcode     : unsigned(3 downto 0) := "1111";
 
     -- states
-    constant fetch_s : unsigned(1 downto 0) := "00";
+    constant fetch_s    : unsigned(1 downto 0) := "00";
+    constant decode_s   : unsigned(1 downto 0) := "01";
+    constant exec_s     : unsigned(1 downto 0) := "10";
 
 begin
-    -- pc instance
-    pc: pc_7 port map (
-        clk         => clk,
-        rst         => rst,
-        wr_en       => wr_en_pc,
-        data_in     => data_in_pc,
-        data_out    => data_out_pc
-    );
-
-    -- rom instance
-    rom: rom_128x17 port map (
-        clk         => clk,
-        addr        => addr_rom,
-        data_out    => data_out_rom
-    );
-
     -- state machine instance
     state_mach: state_mach_3 port map (
         clk     => clk,
@@ -92,40 +52,34 @@ begin
         state   => state_s
     );
 
-    -- instruction register instance
-    inst_reg: register17 port map (
-        clk         => clk,
-        rst         => rst,
-        wr_en       => wr_en_inst_reg,
-        data_in     => data_in_inst_reg,
-        data_out    => data_out_inst_reg
-    );
+    -- instruction fetch ---------------------------------------------------
+    wr_en_pc <= '1' when state_s = exec_s else
+                '0';
 
-    -- pc increment logic
-    data_in_pc <=   data_out_pc + 1 when jump_en = '0' else
-                    jump_addr;
-
-    -- pc output goes to the rom input (addr)
-    addr_rom <= data_out_pc;
-
-    -- rom output to instruction register
-    data_in_inst_reg <= data_out_rom;
-
-    -- instruction fetch
-    -- stop the program counter during fetch state
-    wr_en_pc <= '0' when state_s = fetch_s else     -- fetch
-                '1';                                -- decode/execute
-    
-    -- writes new instruction only in fetch state
-    wr_en_inst_reg <=   '1' when state_s = fetch_s else
+    -- instruction decode --------------------------------------------------
+    wr_en_inst_reg <=   '1' when state_s = decode_s else
                         '0';
 
-    -- instruction decode
-    opcode      <= data_out_inst_reg(16 downto 13);     -- 4 MSB of instruction
-    jump_addr   <= data_out_inst_reg(6 downto 0);       -- 7 LSB of instruction
+    opcode <= instruction(16 downto 13);                -- 4 MSB of instruction
+
+    alu_op <=   "00" when opcode = add_opcode else
+                "01" when opcode = sub_opcode else
+                "00";
     
-    -- instruction execute
-    jump_en <=  '1' when opcode = jmp_opcode else   -- unconditional jump
+    -- instruction execute --------------------------------------------------
+    alu_src <=  '1' when opcode = movei_opcode else     -- loading a constant
                 '0';
+
+    -- to do: enable jump when BEQ and BGT
+    jump_en <=  '1' when opcode = jmp_opcode else       -- unconditional jump
+                '0';
+    
+    reg_write <= '1' when state_s = exec_s AND          -- instructions writing to registers
+                (
+                    opcode = add_opcode     OR
+                    opcode = sub_opcode     OR
+                    opcode = movei_opcode   OR
+                    opcode = move_opcode
+                );
 
 end architecture;
