@@ -1,6 +1,6 @@
 # entities
-ghdl -a ../../mux/mux8x1.vhd
-ghdl -e mux8x1
+ghdl -a ../../mux/mux4x1.vhd
+ghdl -e mux4x1
 
 ghdl -a ../alu.vhd
 ghdl -e alu

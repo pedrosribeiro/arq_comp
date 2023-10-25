@@ -9,14 +9,14 @@ architecture a_alu_tb of alu_tb is
     component alu
         port (
             in_1, in_0  : in    unsigned(15 downto 0);
-            sel_op      : in    unsigned(2 downto 0);
+            sel_op      : in    unsigned(1 downto 0);
             out_0       : out   unsigned(15 downto 0);
-            N, Z, C, V  : out   std_logic
+            N, Z, C, V  : out   std_logic               -- negative, zero, carry and overflow flags
         );
     end component;
 
     signal in_1, in_0, out_0: unsigned(15 downto 0);
-    signal sel_op           : unsigned(2 downto 0);
+    signal sel_op           : unsigned(1 downto 0);
     signal N, Z, C, V       : std_logic;
 
     begin
@@ -34,8 +34,8 @@ architecture a_alu_tb of alu_tb is
     
     process
     begin
-        -- add_op: "000" --
-        sel_op <= "000";
+        -- add_op: "00" --
+        sel_op <= "00";
         in_1 <= "0000000000000000"; -- operands zero
 		in_0 <= "0000000000000000";
 		wait for 50 ns;
@@ -46,8 +46,8 @@ architecture a_alu_tb of alu_tb is
 		in_0 <= "0000000000000010";
 		wait for 50 ns;
 
-        -- sub_op: "001" --
-        sel_op <= "001";
+        -- sub_op: "01" --
+        sel_op <= "01";
         in_1 <= "0000000000000000"; -- operands zero
 		in_0 <= "0000000000000000";
 		wait for 50 ns;
@@ -61,44 +61,8 @@ architecture a_alu_tb of alu_tb is
 		in_0 <= "0000000000000111";
 		wait for 50 ns;
 
-        -- and_op: "010" --
-        sel_op <= "010";
-        in_1 <= "0000000000000000"; -- operands zero
-		in_0 <= "0000000000000000";
-		wait for 50 ns;
-        in_1 <= "0000000000001101"; -- arbitrary operands        
-		in_0 <= "0000000000001011";
-		wait for 50 ns;
-        in_1 <= "0000000000000111"; -- equal operands
-		in_0 <= "0000000000000111";
-		wait for 50 ns;
-
-        -- or_op: "011" --
-        sel_op <= "011";
-        in_1 <= "0000000000000000"; -- operands zero
-		in_0 <= "0000000000000000";
-		wait for 50 ns;
-        in_1 <= "0000000000001101"; -- arbitrary operands        
-		in_0 <= "0000000000001011";
-		wait for 50 ns;
-        in_1 <= "0000000000000111"; -- equal operands
-		in_0 <= "0000000000000111";
-		wait for 50 ns;
-
-        -- not_op: "100" --
-        sel_op <= "100";
-        in_1 <= "0000000000000000"; -- operands zero
-		in_0 <= "0000000000000000";
-		wait for 50 ns;
-        in_1 <= "0000000000001101"; -- arbitrary operands        
-		in_0 <= "0000000000001011";
-		wait for 50 ns;
-        in_1 <= "0000000000000111"; -- equal operands
-		in_0 <= "0000000000000111";
-		wait for 50 ns;
-
-        -- eq_cmp: "101" --
-        sel_op <= "101";
+        -- eq_cmp: "10" --
+        sel_op <= "10";
         in_1 <= "0000000000000000"; -- operands zero
 		in_0 <= "0000000000000000";
 		wait for 50 ns;
@@ -109,8 +73,8 @@ architecture a_alu_tb of alu_tb is
 		in_0 <= "0000000000000111";
 		wait for 50 ns;
 
-        -- gt_cmp: "110" --
-        sel_op <= "110";
+        -- gt_cmp: "11" --
+        sel_op <= "11";
         in_1 <= "0000000000000000"; -- operands zero
 		in_0 <= "0000000000000000";
 		wait for 50 ns;
@@ -121,18 +85,6 @@ architecture a_alu_tb of alu_tb is
 		in_0 <= "0000000000000111";
 		wait for 50 ns;
         in_1 <= "0000000000001011"; -- in_1 lower than in_0
-		in_0 <= "0000000000001101";
-		wait for 50 ns;
-
-        -- inc_op: "111" --
-        sel_op <= "111";
-        in_1 <= "0000000000000000"; -- operands zero
-		in_0 <= "0000000000000000";
-		wait for 50 ns;
-        in_1 <= "0000000000001101"; -- arbitrary operands        
-		in_0 <= "0000000000001011";
-		wait for 50 ns;
-        in_1 <= "1111111111111111"; -- carry needed
 		in_0 <= "0000000000001101";
 		wait for 50 ns;
 
