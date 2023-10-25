@@ -36,9 +36,9 @@ ghdl -a ../processor.vhd
 ghdl -e processor
 
 # testbench
-#ghdl -a processor_tb.vhd
-#ghdl -e processor_tb
+ghdl -a processor_tb.vhd
+ghdl -e processor_tb
 
 # run and view
-#ghdl -r processor_tb --wave=compiled/processor_tb.ghw
-#gtkwave compiled/processor_tb.ghw
+ghdl -r processor_tb --wave=compiled/processor_tb.ghw
+gtkwave compiled/processor_tb.ghw

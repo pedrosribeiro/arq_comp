@@ -51,7 +51,7 @@ architecture a_processor of processor is
     end component;
 
     signal read_reg1, read_reg0, write_reg: unsigned(2 downto 0);
-    signal reg_bank_data_in, reg_bank_read_data1, reg_bank_read_data0: unsigned(15 downto 0);
+    signal reg_bank_read_data1, reg_bank_read_data0: unsigned(15 downto 0);
 
     component pc_7 is
         port (
@@ -104,7 +104,19 @@ architecture a_processor of processor is
 
     signal inst_reg_data_out: unsigned(16 downto 0);
 
-    signal immediate: unsigned(15 downto 0);
+    signal immediate    : unsigned(15 downto 0);
+    signal jmp_addr     : unsigned(6 downto 0);
+    signal opcode       : unsigned(3 downto 0);
+
+    -- opcodes
+    constant nop_opcode     : unsigned(3 downto 0) := "0000";
+    constant add_opcode     : unsigned(3 downto 0) := "0001";
+    constant sub_opcode     : unsigned(3 downto 0) := "0010";
+    constant movei_opcode   : unsigned(3 downto 0) := "0011";
+    constant move_opcode    : unsigned(3 downto 0) := "0100";
+    constant beq_opcode     : unsigned(3 downto 0) := "0110";
+    constant bgt_opcode     : unsigned(3 downto 0) := "0111";
+    constant jmp_opcode     : unsigned(3 downto 0) := "1111";
 
 begin
     -- alu instance
@@ -134,7 +146,7 @@ begin
         read_reg1   => read_reg1,
         read_reg0   => read_reg0,
         write_reg   => write_reg,           -- control unit
-        data_in     => reg_bank_data_in,
+        data_in     => alu_out,             -- alu
         read_data1  => reg_bank_read_data1,
         read_data0  => reg_bank_read_data0
     );
@@ -177,7 +189,37 @@ begin
         data_out    => inst_reg_data_out
     );
 
-    -- to do: pc increment logic
-    -- get jump address
+    opcode <= inst_reg_data_out(16 downto 13);      -- 4 MSB of instruction
+
+    -- source register
+    read_reg0 <= "000" when 
+                            (
+                                opcode = nop_opcode OR
+                                opcode = movei_opcode OR
+                                opcode = beq_opcode OR
+                                opcode = bgt_opcode OR
+                                opcode = jmp_opcode
+                            )
+                    else inst_reg_data_out(5 downto 3);
+    
+    -- destination register
+    read_reg1 <=    "000" when (opcode = move_opcode OR opcode = movei_opcode) else -- a makeshift solution to turn a MOVE into an ADD
+                    inst_reg_data_out(2 downto 0);
+    
+    -- write register
+    write_reg <= inst_reg_data_out(2 downto 0);
+
+    -- immediate/constant - sign extend
+    immediate <=    "000000" & inst_reg_data_out(12 downto 3) when inst_reg_data_out(12) = '0' else
+                    "111111" & inst_reg_data_out(12 downto 3);
+
+    -- jump/branch address
+    jmp_addr <= inst_reg_data_out(6 downto 0);
+
+    -- pc increment logic
+    pc_data_in <=   jmp_addr when (opcode = beq_opcode AND Z = '1') else    -- beq
+                    jmp_addr when (opcode = bgt_opcode AND Z = '1') else    -- bgt
+                    jmp_addr when (opcode = jmp_opcode)             else    -- jmp
+                    pc_data_out + 1;                                        -- next instruction
 
 end architecture;

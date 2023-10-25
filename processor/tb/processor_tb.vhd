@@ -7,7 +7,10 @@ end entity;
 
 architecture a_processor_tb of processor_tb is
     component processor
-        -- ports definition
+        port (
+            clk: in std_logic;
+            rst: in std_logic
+        );
     end component;
 
     constant period_time    : time := 100 ns;
@@ -16,7 +19,10 @@ architecture a_processor_tb of processor_tb is
     signal clk, rst         : std_logic;
 
 begin
-    -- uut
+    uut: processor port map (
+        clk => clk,
+        rst => rst
+    );
 
     rst_global: process
     begin	

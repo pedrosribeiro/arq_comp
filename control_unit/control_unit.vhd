@@ -80,6 +80,6 @@ begin
                     opcode = sub_opcode     OR
                     opcode = movei_opcode   OR
                     opcode = move_opcode
-                );
+                ) else '0';
 
 end architecture;
