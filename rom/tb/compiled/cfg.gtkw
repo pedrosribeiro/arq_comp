@@ -1,19 +1,17 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Sun Oct 08 02:36:12 2023
+[*] Wed Oct 25 01:25:30 2023
 [*]
 [dumpfile] "C:\Users\55459\Desktop\arq_comp\rom\tb\compiled\rom_128x17_tb.ghw"
-[dumpfile_mtime] "Sat Oct 07 16:38:15 2023"
-[dumpfile_size] 15145
 [savefile] "C:\Users\55459\Desktop\arq_comp\rom\tb\compiled\cfg.gtkw"
 [timestart] 0
 [size] 1920 1017
-[pos] -35 -35
-*-23.627193 52100000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -217 -217
+*-24.340038 193300000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.rom_128x17_tb.
 [sst_width] 197
-[signals_width] 198
+[signals_width] 295
 [sst_expanded] 1
 [sst_vpaned_height] 633
 @28
