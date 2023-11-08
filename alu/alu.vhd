@@ -24,14 +24,14 @@ architecture a_alu of alu is
     constant ONE    : unsigned(16 downto 0) := "00000000000000001";
 
     -- one more bit if carry
-    signal add_op, sub_op, eq_cmp, gt_cmp, result: unsigned(16 downto 0);
+    signal add_op, sub_op, cmp_op, result: unsigned(16 downto 0);
 
 begin
     mux: mux4x1
         port map (
             sel => sel_op,
-            in_3 => gt_cmp  (15 downto 0), -- greater than
-            in_2 => eq_cmp  (15 downto 0), -- equal to
+            in_3 => cmp_op  (15 downto 0),
+            in_2 => cmp_op  (15 downto 0),
             in_1 => sub_op  (15 downto 0),
             in_0 => add_op  (15 downto 0),
             out_0 => out_0
@@ -39,34 +39,30 @@ begin
     
     result <=   add_op when sel_op = "00" else
                 sub_op when sel_op = "01" else
-                eq_cmp when sel_op = "10" else
-                gt_cmp when sel_op = "11" else
+                cmp_op when sel_op = "10" else
                 ZERO;
     
     -- operations (sign extension needed)
     add_op  <= ('0' & in_1) + ('0' & in_0);
     sub_op  <= ('0' & in_1) - ('0' & in_0);
-    eq_cmp  <= ONE when in_1 = in_0 else ZERO;
-    gt_cmp  <= ONE when in_1 > in_0 else ZERO;
+    cmp_op  <= ('0' & in_1) - ('0' & in_0);
 
     -- flags
-    N <= '1' when result < ZERO
+    N <=    '0' when ((sel_op = "10") AND (in_0 > in_1)) else       -- BLT Flag
+            '1' when result < ZERO
         else '0';
 
     Z <= '1' when -- used in cmp
-            ((sel_op /= "10" AND sel_op /= "11") AND (result = ZERO)) OR
-            ((sel_op = "10") AND (result = ONE)) OR
-            ((sel_op = "11") AND (result = ONE))
+            ((sel_op /= "10") AND (result = ZERO)) OR
+            ((sel_op = "10") AND (result = ZERO))                   -- BEQ Flag
         else '0';
     
     C <= '1' when 
             ((sel_op = "00") AND (result(16) = '1')) OR
-            ((sel_op = "01") AND (in_0 > in_1))         -- borrow
+            ((sel_op = "01" OR sel_op = "10") AND (in_0 > in_1))    -- borrow
         else '0';
 
-    V <= '1' when
-            ((sel_op = "00") AND ((in_1 > ZERO AND in_0 > ZERO AND result < ZERO) OR (in_1 < ZERO AND in_0 < ZERO AND result > ZERO))) OR
-            ((sel_op = "01") AND ((in_1 > ZERO AND in_0 < ZERO AND result < ZERO) OR (in_1 < ZERO AND in_0 > ZERO AND result > ZERO)))
+    V <= '1' when ((sel_op = "10") AND (in_0 > in_1))               -- BLT Flag
         else '0';
 
 end architecture;

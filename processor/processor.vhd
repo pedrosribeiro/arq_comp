@@ -85,11 +85,12 @@ architecture a_processor of processor is
             alu_src         : out std_logic;
             reg_write       : out std_logic;            -- register bank write enable
             jump_en         : out std_logic;
+            flags_wr_en     : out std_logic;            -- flags registers write enable
             alu_op          : out unsigned(1 downto 0)
         );
     end component;
 
-    signal wr_en_pc, wr_en_inst_reg, reg_write, alu_src, jump_en: std_logic;
+    signal wr_en_pc, wr_en_inst_reg, reg_write, alu_src, jump_en, flags_wr_en: std_logic;
     signal alu_op: unsigned(1 downto 0);
 
     component register17
@@ -104,6 +105,19 @@ architecture a_processor of processor is
 
     signal inst_reg_data_out: unsigned(16 downto 0);
 
+    component register1
+        port (
+            clk     : in std_logic;
+            rst     : in std_logic;
+            wr_en   : in std_logic;
+            data_in : in std_logic;
+            data_out: out std_logic
+        );
+    end component;
+
+    -- cmp flags registers
+    signal n_flag_cmp_data_out, z_flag_cmp_data_out, c_flag_cmp_data_out, v_flag_cmp_data_out: std_logic;
+
     signal immediate    : unsigned(15 downto 0);
     signal jmp_addr     : unsigned(6 downto 0);
     signal opcode       : unsigned(3 downto 0);
@@ -114,8 +128,9 @@ architecture a_processor of processor is
     constant sub_opcode     : unsigned(3 downto 0) := "0010";
     constant movei_opcode   : unsigned(3 downto 0) := "0011";
     constant move_opcode    : unsigned(3 downto 0) := "0100";
+    constant cmp_opcode     : unsigned(3 downto 0) := "0101";
     constant beq_opcode     : unsigned(3 downto 0) := "0110";
-    constant bgt_opcode     : unsigned(3 downto 0) := "0111";
+    constant blt_opcode     : unsigned(3 downto 0) := "0111";
     constant jmp_opcode     : unsigned(3 downto 0) := "1111";
 
 begin
@@ -128,7 +143,7 @@ begin
         N       => N,
         Z       => Z,
         C       => C,
-        V       => v
+        V       => V
     );
 
     alu_src_mux: mux2x1 port map (
@@ -177,6 +192,7 @@ begin
         alu_src         => alu_src,
         reg_write       => reg_write,
         jump_en         => jump_en,
+        flags_wr_en     => flags_wr_en,
         alu_op          => alu_op
     );
     
@@ -189,6 +205,42 @@ begin
         data_out    => inst_reg_data_out
     );
 
+    -- n flag register instance
+    n_flag_cmp: register1 port map (
+        clk         => clk,
+        rst         => rst,
+        wr_en       => flags_wr_en,
+        data_in     => N,                   -- alu
+        data_out    => n_flag_cmp_data_out
+    );
+
+    -- z flag register instance
+    z_flag_cmp: register1 port map (
+        clk         => clk,
+        rst         => rst,
+        wr_en       => flags_wr_en,
+        data_in     => Z,                   -- alu
+        data_out    => z_flag_cmp_data_out
+    );
+
+    -- c flag register instance
+    c_flag_cmp: register1 port map (
+        clk         => clk,
+        rst         => rst,
+        wr_en       => flags_wr_en,
+        data_in     => C,                   -- alu
+        data_out    => c_flag_cmp_data_out
+    );
+
+    -- v flag register instance
+    v_flag_cmp: register1 port map (
+        clk         => clk,
+        rst         => rst,
+        wr_en       => flags_wr_en,
+        data_in     => V,                   -- alu
+        data_out    => v_flag_cmp_data_out
+    );
+
     opcode <= inst_reg_data_out(16 downto 13);      -- 4 MSB of instruction
 
     -- source register
@@ -197,7 +249,7 @@ begin
                                 opcode = nop_opcode OR
                                 opcode = movei_opcode OR
                                 opcode = beq_opcode OR
-                                opcode = bgt_opcode OR
+                                opcode = blt_opcode OR
                                 opcode = jmp_opcode
                             )
                     else inst_reg_data_out(5 downto 3);
@@ -214,12 +266,14 @@ begin
                     "111111" & inst_reg_data_out(12 downto 3);
 
     -- jump/branch address
-    jmp_addr <= inst_reg_data_out(6 downto 0);
-
+    jmp_addr <= (pc_data_out + inst_reg_data_out(6 downto 0)) when (inst_reg_data_out(7) = '1' AND inst_reg_data_out(8) = '0') else -- fwd relative jump
+                (pc_data_out - inst_reg_data_out(6 downto 0)) when (inst_reg_data_out(7) = '1' AND inst_reg_data_out(8) = '1') else -- bwd relative jump
+                inst_reg_data_out(6 downto 0); -- absolute
+    
     -- pc increment logic
-    pc_data_in <=   jmp_addr when (opcode = beq_opcode AND Z = '1') else    -- beq
-                    jmp_addr when (opcode = bgt_opcode AND Z = '1') else    -- bgt
-                    jmp_addr when (opcode = jmp_opcode)             else    -- jmp
-                    pc_data_out + 1;                                        -- next instruction
+    pc_data_in <=   jmp_addr when (opcode = beq_opcode AND z_flag_cmp_data_out = '1')                                   else    -- beq
+                    jmp_addr when (opcode = blt_opcode AND (n_flag_cmp_data_out = '0' AND v_flag_cmp_data_out = '1'))   else    -- blt
+                    jmp_addr when (opcode = jmp_opcode)                                                                 else    -- jmp
+                    pc_data_out + 1;                                                                                            -- next instruction
 
 end architecture;

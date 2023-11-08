@@ -32,6 +32,9 @@ ghdl -e control_unit
 ghdl -a ../../register/register17.vhd
 ghdl -e register17
 
+ghdl -a ../../register/register1.vhd
+ghdl -e register1
+
 ghdl -a ../processor.vhd
 ghdl -e processor
 

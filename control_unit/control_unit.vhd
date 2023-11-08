@@ -12,6 +12,7 @@ entity control_unit is
         alu_src         : out std_logic;
         reg_write       : out std_logic;            -- register bank write enable
         jump_en         : out std_logic;
+        flags_wr_en     : out std_logic;            -- flags registers write enable
         alu_op          : out unsigned(1 downto 0)
     );
 end entity;
@@ -35,8 +36,9 @@ architecture a_control_unit of control_unit is
     constant sub_opcode     : unsigned(3 downto 0) := "0010";
     constant movei_opcode   : unsigned(3 downto 0) := "0011";
     constant move_opcode    : unsigned(3 downto 0) := "0100";
+    constant cmp_opcode     : unsigned(3 downto 0) := "0101";
     constant beq_opcode     : unsigned(3 downto 0) := "0110";
-    constant bgt_opcode     : unsigned(3 downto 0) := "0111";
+    constant blt_opcode     : unsigned(3 downto 0) := "0111";
     constant jmp_opcode     : unsigned(3 downto 0) := "1111";
 
     -- states
@@ -64,13 +66,18 @@ begin
 
     alu_op <=   "00" when opcode = add_opcode else
                 "01" when opcode = sub_opcode else
+                "10" when opcode = cmp_opcode else
                 "00";
     
     -- instruction execute --------------------------------------------------
     alu_src <=  '1' when opcode = movei_opcode else     -- loading a constant
                 '0';
+    
+    -- flags write enable
+    flags_wr_en <=  '1' when opcode = cmp_opcode AND state_s = exec_s else
+                    '0';
 
-    -- to do: enable jump when BEQ and BGT
+    -- to do: enable jump when BEQ and BLT
     jump_en <=  '1' when opcode = jmp_opcode else       -- unconditional jump
                 '0';
     

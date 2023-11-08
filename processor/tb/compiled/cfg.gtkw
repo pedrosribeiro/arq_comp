@@ -1,13 +1,13 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Wed Oct 25 05:05:17 2023
+[*] Wed Nov 08 16:01:33 2023
 [*]
 [dumpfile] "C:\Users\55459\Desktop\arq_comp\processor\tb\compiled\compiled\processor_tb.ghw"
 [savefile] "C:\Users\55459\Desktop\arq_comp\processor\tb\compiled\cfg.gtkw"
-[timestart] 800000000
+[timestart] 0
 [size] 1920 1017
-[pos] -35 -35
-*-29.458586 1165000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -139 -139
+*-28.458586 590000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.processor_tb.
 [treeopen] top.processor_tb.uut.
@@ -22,7 +22,7 @@
 @28
 top.processor_tb.rst
 top.processor_tb.clk
-@23
+@22
 #{top.processor_tb.uut.control_unit_processor.state_mach.state_s[1:0]} top.processor_tb.uut.control_unit_processor.state_mach.state_s[1] top.processor_tb.uut.control_unit_processor.state_mach.state_s[0]
 @24
 #{top.processor_tb.uut.pc_data_out[6:0]} top.processor_tb.uut.pc_data_out[6] top.processor_tb.uut.pc_data_out[5] top.processor_tb.uut.pc_data_out[4] top.processor_tb.uut.pc_data_out[3] top.processor_tb.uut.pc_data_out[2] top.processor_tb.uut.pc_data_out[1] top.processor_tb.uut.pc_data_out[0]

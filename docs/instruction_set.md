@@ -23,10 +23,12 @@ Usage: All instructions except MOVEI and branches.
 
 ### B (Branch) Format
 ```
-| opcode (4) | unused_bits (6) | jmp_addr (7) |
+| opcode (4) | unused_bits (4) | fwd_bwd (1) | addr_ctrl (1) | jmp_addr (7) |
 ```
 - **Opcode (4 bits)**: Identifies the branch operation.
 - **Unused Bits (4 bits)**: Reserved but not used.
+- **Forward or backward (1 bit)**: Specifies whether the address is forward (0) or backward (1).
+- **Address Control (1 bit)**: Specifies whether the address is absolute (0) or relative (1).
 - **Jump Address (7 bits)**: Specifies the jump destination.
 
 Usage: Branch instructions.
@@ -54,16 +56,16 @@ Usage: Branch instructions.
 - Opcode: 0100
 
 ### CMP.W D1, D0
-- Description: Compares the registers (D0 - D1).
+- Description: Compares the registers (D0 - D1) and changes the ALU flags.
 - Opcode: 0101
 
-### BEQ.S Equal
-- Description: Branches to Equal if the operands are equal.
-- Opcode: 0110
+    ### BEQ.S Equal
+    - Description: Branches to Equal if the operands are equal (Z flag is set (Z = 1)).
+    - Opcode: 0110
 
-### BGT.S IsHigher
-- Description: Branches to isHigher if D0 is higher than D1.
-- Opcode: 0111
+    ### BLT.S IsLower
+    - Description: Branches to IsLower if D0 is lower than D1 (N flag is clear but the V flag is set (N = 0, V = 1)).
+    - Opcode: 0111
 
 ### JMP Label
 - Description: Jumps to Label unconditionally.
