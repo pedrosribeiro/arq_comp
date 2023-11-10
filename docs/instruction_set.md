@@ -23,11 +23,10 @@ Usage: All instructions except MOVEI and branches.
 
 ### B (Branch) Format
 ```
-| opcode (4) | unused_bits (4) | fwd_bwd (1) | addr_ctrl (1) | jmp_addr (7) |
+| opcode (4) | unused_bits (5) | addr_ctrl (1) | jmp_addr (7) |
 ```
 - **Opcode (4 bits)**: Identifies the branch operation.
-- **Unused Bits (4 bits)**: Reserved but not used.
-- **Forward or backward (1 bit)**: Specifies whether the address is forward (0) or backward (1).
+- **Unused Bits (5 bits)**: Reserved but not used.
 - **Address Control (1 bit)**: Specifies whether the address is absolute (0) or relative (1).
 - **Jump Address (7 bits)**: Specifies the jump destination.
 

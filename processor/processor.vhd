@@ -266,9 +266,8 @@ begin
                     "111111" & inst_reg_data_out(12 downto 3);
 
     -- jump/branch address
-    jmp_addr <= (pc_data_out + inst_reg_data_out(6 downto 0)) when (inst_reg_data_out(7) = '1' AND inst_reg_data_out(8) = '0') else -- fwd relative jump
-                (pc_data_out - inst_reg_data_out(6 downto 0)) when (inst_reg_data_out(7) = '1' AND inst_reg_data_out(8) = '1') else -- bwd relative jump
-                inst_reg_data_out(6 downto 0); -- absolute
+    jmp_addr <= (pc_data_out + inst_reg_data_out(6 downto 0)) when (inst_reg_data_out(7) = '1') else --  relative jump
+                inst_reg_data_out(6 downto 0); -- absolute jump
     
     -- pc increment logic
     pc_data_in <=   jmp_addr when (opcode = beq_opcode AND z_flag_cmp_data_out = '1')                                   else    -- beq
