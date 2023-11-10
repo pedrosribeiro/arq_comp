@@ -74,8 +74,12 @@ begin
                 '0';
     
     -- flags write enable
-    flags_wr_en <=  '1' when opcode = cmp_opcode AND state_s = exec_s else
-                    '0';
+    flags_wr_en <=  '1' when state_s = exec_s AND 
+                    (
+                        opcode = cmp_opcode OR
+                        opcode = add_opcode OR
+                        opcode = sub_opcode
+                    ) else '0';
 
     -- to do: enable jump when BEQ and BLT
     jump_en <=  '1' when opcode = jmp_opcode else       -- unconditional jump
