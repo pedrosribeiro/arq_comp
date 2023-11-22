@@ -51,7 +51,7 @@ architecture a_processor of processor is
     end component;
 
     signal read_reg1, read_reg0, write_reg: unsigned(2 downto 0);
-    signal reg_bank_read_data1, reg_bank_read_data0: unsigned(15 downto 0);
+    signal reg_bank_data_in, reg_bank_read_data1, reg_bank_read_data0: unsigned(15 downto 0);
 
     component pc_7 is
         port (
@@ -86,11 +86,12 @@ architecture a_processor of processor is
             reg_write       : out std_logic;            -- register bank write enable
             jump_en         : out std_logic;
             flags_wr_en     : out std_logic;            -- flags registers write enable
-            alu_op          : out unsigned(1 downto 0)
+            alu_op          : out unsigned(1 downto 0);
+            ram_wr_en       : out std_logic            -- ram write enable
         );
     end component;
 
-    signal wr_en_pc, wr_en_inst_reg, reg_write, alu_src, jump_en, flags_wr_en: std_logic;
+    signal wr_en_pc, wr_en_inst_reg, reg_write, alu_src, jump_en, flags_wr_en, ram_wr_en: std_logic;
     signal alu_op: unsigned(1 downto 0);
 
     component register17
@@ -118,6 +119,19 @@ architecture a_processor of processor is
     -- cmp flags registers
     signal n_flag_cmp_data_out, z_flag_cmp_data_out, c_flag_cmp_data_out, v_flag_cmp_data_out: std_logic;
 
+    component ram_128x16 is
+        port (
+            clk     : in std_logic;
+            addr    : in unsigned(6 downto 0);      -- 128 addresses
+            wr_en   : in std_logic;
+            data_in : in unsigned(15 downto 0);
+            data_out: out unsigned(15 downto 0)
+        );
+    end component;
+
+    signal ram_addr                 : unsigned(6 downto 0);
+    signal ram_data_in, ram_data_out: unsigned(15 downto 0);
+
     signal immediate    : unsigned(15 downto 0);
     signal jmp_addr     : unsigned(6 downto 0);
     signal opcode       : unsigned(3 downto 0);
@@ -131,6 +145,8 @@ architecture a_processor of processor is
     constant cmp_opcode     : unsigned(3 downto 0) := "0101";
     constant beq_opcode     : unsigned(3 downto 0) := "0110";
     constant blt_opcode     : unsigned(3 downto 0) := "0111";
+    constant load_opcode    : unsigned(3 downto 0) := "1000";
+    constant store_opcode   : unsigned(3 downto 0) := "1001";
     constant jmp_opcode     : unsigned(3 downto 0) := "1111";
 
 begin
@@ -161,7 +177,7 @@ begin
         read_reg1   => read_reg1,
         read_reg0   => read_reg0,
         write_reg   => write_reg,           -- control unit
-        data_in     => alu_out,             -- alu
+        data_in     => reg_bank_data_in,
         read_data1  => reg_bank_read_data1,
         read_data0  => reg_bank_read_data0
     );
@@ -193,7 +209,8 @@ begin
         reg_write       => reg_write,
         jump_en         => jump_en,
         flags_wr_en     => flags_wr_en,
-        alu_op          => alu_op
+        alu_op          => alu_op,
+        ram_wr_en       => ram_wr_en
     );
     
     -- instruction register instance
@@ -241,6 +258,14 @@ begin
         data_out    => v_flag_cmp_data_out
     );
 
+    ram: ram_128x16 port map (
+        clk         => clk,
+        addr        => ram_addr,
+        wr_en       => ram_wr_en,       -- control unit
+        data_in     => ram_data_in,
+        data_out    => ram_data_out
+    );
+
     opcode <= inst_reg_data_out(16 downto 13);      -- 4 MSB of instruction
 
     -- source register
@@ -261,6 +286,17 @@ begin
     -- write register
     write_reg <= inst_reg_data_out(2 downto 0);
 
+    -- ram signals (pointers)
+    ram_addr <= reg_bank_read_data1(6 downto 0) when opcode = store_opcode else  -- store
+                reg_bank_read_data0(6 downto 0) when opcode = load_opcode else -- load
+                "0000000";
+    
+    ram_data_in <= reg_bank_read_data0 when opcode = store_opcode else -- store
+                   "0000000000000000";
+
+    reg_bank_data_in <= ram_data_out when opcode = load_opcode else -- load
+                        alu_out;                                    -- other cases
+                
     -- immediate/constant - sign extend
     immediate <=    "000000" & inst_reg_data_out(12 downto 3) when inst_reg_data_out(12) = '0' else
                     "111111" & inst_reg_data_out(12 downto 3);

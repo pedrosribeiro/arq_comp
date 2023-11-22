@@ -13,7 +13,8 @@ entity control_unit is
         reg_write       : out std_logic;            -- register bank write enable
         jump_en         : out std_logic;
         flags_wr_en     : out std_logic;            -- flags registers write enable
-        alu_op          : out unsigned(1 downto 0)
+        alu_op          : out unsigned(1 downto 0);
+        ram_wr_en       : out std_logic            -- ram write enable
     );
 end entity;
 
@@ -39,6 +40,8 @@ architecture a_control_unit of control_unit is
     constant cmp_opcode     : unsigned(3 downto 0) := "0101";
     constant beq_opcode     : unsigned(3 downto 0) := "0110";
     constant blt_opcode     : unsigned(3 downto 0) := "0111";
+    constant load_opcode    : unsigned(3 downto 0) := "1000";
+    constant store_opcode   : unsigned(3 downto 0) := "1001";
     constant jmp_opcode     : unsigned(3 downto 0) := "1111";
 
     -- states
@@ -90,7 +93,12 @@ begin
                     opcode = add_opcode     OR
                     opcode = sub_opcode     OR
                     opcode = movei_opcode   OR
-                    opcode = move_opcode
+                    opcode = move_opcode    OR
+                    opcode = load_opcode
                 ) else '0';
+    
+    -- ram write enable only when storing
+    ram_wr_en <=    '1' when state_s = exec_s AND opcode = store_opcode else 
+                    '0';
 
 end architecture;

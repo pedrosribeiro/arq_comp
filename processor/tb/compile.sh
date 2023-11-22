@@ -35,6 +35,9 @@ ghdl -e register17
 ghdl -a ../../register/register1.vhd
 ghdl -e register1
 
+ghdl -a ../../ram/ram_128x16.vhd
+ghdl -e ram_128x16
+
 ghdl -a ../processor.vhd
 ghdl -e processor
 
