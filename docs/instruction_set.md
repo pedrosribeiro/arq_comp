@@ -66,11 +66,11 @@ Usage: Branch instructions.
     - Description: Branches to IsLower if D0 is lower than D1 (N flag is clear but the V flag is set (N = 0, V = 1)).
     - Opcode: 0111
 
-### LW.W (D1), D0
+### MOVE.W (D1), D0
 - Description: Loads into D0 a word from the memory address pointed to by D1 (D0 <= (D1)).
 - Opcode: 1000
 
-### SW.W D1, (D0)
+### MOVE.W D1, (D0)
 - Description: Stores a word from D1 in the memory address pointed to by D0 ((D0) <= D1).
 - Opcode: 1001
 
